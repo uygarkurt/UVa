@@ -1,0 +1,45 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <algorithm>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int killed[1024][1024];
+int main()
+{
+	int t;
+	scanf("%d", &t);
+	while(t--)
+	{
+		memset(killed, 0, sizeof killed);
+		int d, n;
+		scanf("%d%d", &d, &n);
+		int x, y, num;
+		for(int i=0; i<n; i++)
+		{
+			scanf("%d%d%d", &x, &y, &num);
+			for(int c1=max(0, x-d); c1<=min(1023, x+d); c1++)
+			{
+				for(int c2=max(0, y-d); c2<=min(1023, y+d); c2++)
+				{
+					killed[c1][c2]+=num;
+				}
+			}
+		}
+		int xr=0, yr=0, numr=-1;
+		for(int i=0; i<1024; i++)
+			for(int j=0; j<1024; j++)
+			{
+				if(killed[i][j]>numr)
+				{
+					numr=killed[i][j];
+					xr=i; yr=j;
+				}
+			}
+		printf("%d %d %d\n", xr, yr, numr);
+	}
+
+	return 0;
+}
