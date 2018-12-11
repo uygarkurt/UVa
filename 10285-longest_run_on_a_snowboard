@@ -53,5 +53,6 @@ int main()
 		sort(vec.rbegin(), vec.rend());
 		cout<<str<<": "; printf("%d\n", vec[0]+1);
 		vec.clear();
+		memset(ski, 0, sizeof ski);
 	}
 }
