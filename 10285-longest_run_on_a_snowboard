@@ -1,0 +1,57 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <algorithm>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <iostream>
+using namespace std;
+int r, c;
+int ski[110][110];
+vector<int>vec;
+int returner(int x, int y, int length)
+{
+	int a=0, b=0, t=0, d=0;
+	if((y-1)>=0 && ski[x][y-1]<ski[x][y]) a=returner(x, y-1, length+1);
+	if((y+1)<c && ski[x][y+1]<ski[x][y]) b=returner(x, y+1, length+1);
+	if((x-1)>=0 && ski[x-1][y]<ski[x][y]) t=returner(x-1, y, length+1);
+	if((x+1)<r && ski[x+1][y]<ski[x][y]) d=returner (x+1, y, length+1);
+	if(a!=0||b!=0||t!=0||d!=0)
+	{
+		vector<int>temp; temp.push_back(a); temp.push_back(b); temp.push_back(t); temp.push_back(d);
+		sort(temp.rbegin(), temp.rend());
+		vec.push_back(temp[0]);
+		return temp[0];
+	}
+	else {vec.push_back(length);return(length);}
+}
+
+int main()
+{
+	string str;
+	int N; scanf("%d", &N);
+	for(int counter=0; counter<N; counter++)
+	{
+		cin>>str;
+		scanf("%d%d", &r, &c);
+		for(int i1=0; i1<r; i1++)
+		{
+			for(int i2=0; i2<c; i2++)
+			{
+				int temp; scanf("%d", &temp);
+				ski[i1][i2]=temp;
+			}
+		}
+
+		for(int i1=0; i1<r; i1++)
+		{
+			for(int i2=0; i2<c; i2++)
+			{
+				returner(i1, i2, 0);
+			}
+		}
+		sort(vec.rbegin(), vec.rend());
+		cout<<str<<": "; printf("%d\n", vec[0]+1);
+		vec.clear();
+	}
+}
