@@ -1,0 +1,42 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <algorithm>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main()
+{
+	int i, j;
+	while(scanf("%d%d", &i, &j)!=EOF)
+	{
+		int tempi=i, tempj=j;
+		if(i>j) swap(i, j);
+		int length=0;
+		int maxl=0;
+		while(i<=j)
+		{
+			unsigned int n=i;
+label1:
+			length+=1;
+			if(n!=1)
+			{
+				if(n&1)
+				{
+					n=n*3+1;
+				}
+				else
+					n=n>>1;
+				goto label1;
+			}
+			if(length>maxl)
+				maxl=length;
+			length=0;
+			i++;
+		}
+		printf("%d %d %d\n", tempi, tempj, maxl);
+	}
+	return 0;
+}
