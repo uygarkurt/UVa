@@ -1,0 +1,29 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <algorithm>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+	char c;
+	bool checker=true;
+	while(scanf("%c", &c)!=EOF)
+	{
+		if(c=='"')
+		{
+			if(checker)
+				cout<<"``";
+			else
+				cout<<"''";
+			checker=!checker;
+		}
+		else
+			cout<<c;
+	}
+	return 0;
+}
