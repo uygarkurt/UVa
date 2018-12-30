@@ -1,0 +1,104 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <algorithm>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <cstring>
+#include <stack>
+using namespace std;
+
+stack<pair<char, char>> s;
+vector<stack<pair<char, char>>> vec;
+
+void returner()
+{
+	for(int i=1; i<vec.size(); i++)
+	{
+		if(i>2)
+		{
+			if(vec[i].top().first==vec[i-3].top().first || vec[i].top().second==vec[i-3].top().second)
+			{
+				vec[i-3].push(vec[i].top());
+				vec[i].pop();
+				if(vec[i].empty())
+					vec.erase(vec.begin()+i);
+				i=0;
+			}
+			else
+			{
+				if(vec[i].top().first==vec[i-1].top().first || vec[i].top().second==vec[i-1].top().second)
+				{
+					vec[i-1].push(vec[i].top());
+					vec[i].pop();
+					if(vec[i].empty())
+						vec.erase(vec.begin()+i);
+					i=0;
+				}
+			}
+		}
+		else
+		{
+			if(vec[i].top().first==vec[i-1].top().first || vec[i].top().second==vec[i-1].top().second)
+			{
+				vec[i-1].push(vec[i].top());
+				vec[i].pop();
+				if(vec[i].empty())
+					vec.erase(vec.begin()+i);
+				i=0;
+			}
+		}	
+	}
+}
+
+int main()
+{
+	int counter=0;
+	char temp;
+	bool flag=true;
+	pair<char, char> card;
+label1:
+	while(counter<52)
+	{
+		scanf("%c", &temp);
+		if(temp=='#')
+			goto label2;
+		if(temp!=' ' && temp!='\n')
+		{
+			if(flag)
+				card.first=temp;
+			else
+				card.second=temp;
+			if(flag==false)
+			{
+				s.push(card);
+				vec.push_back(s);
+				s.pop();
+				counter++;
+			}
+			flag=!flag;
+		}
+	}
+	returner();
+	if(vec.size()!=1)
+		cout<<vec.size()<<" piles remaining: ";
+	else
+		cout<<vec.size()<<" pile remaining: ";
+	for(int i=0; i<vec.size(); i++)
+	{
+		if(i==vec.size()-1)
+		{
+			printf("%d", vec[i].size());
+		}
+		else
+			printf("%d ", vec[i].size());
+	}
+	puts("");
+	vec.clear();
+	counter=0;
+	goto label1;
+label2:
+	return 0;
+}
