@@ -1,0 +1,100 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <algorithm>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <cstring>
+#include <stack>
+#include <sstream>
+using namespace std;
+
+int main()
+{
+	stack<char>s;
+	vector<string>vec;
+	int N, it, counter1=0, counter2=0;
+	scanf("%d", &N);
+	cin.ignore();
+	string str;
+	bool flag=true;
+	for(int j=0; j<N; j++){
+		getline(cin, str);
+		if(str.empty()){
+			vec.push_back("Yes");
+			goto label2;
+		}
+		for(int i=0; i<str.length(); i++)
+		{
+			if(str.at(i)!=' ')
+			{
+				if(str.at(i)=='(' || str.at(i)=='[')
+				{
+					s.push(str.at(i));
+					if(str.at(i)=='(')
+					{
+						counter1++;
+					}
+					else if(str.at(i)=='[')
+					{
+						counter2++;
+					}
+				}
+				else if((str.at(i)==')' || str.at(i)==']'))
+				{
+					if(str.at(i)==')')
+					{
+						if(s.size()>0){
+							if(s.top()!='(')
+							{
+								vec.push_back("No");
+								flag=false;
+								break;
+							}
+							s.pop();
+						}
+						counter1--;
+						if(counter1<0)
+						{
+							vec.push_back("No");
+							flag=false;
+							break;
+						}
+					}
+					else if(str.at(i)==']')
+					{
+						if(s.size()>0){
+							if(s.top()!='[')
+							{
+								vec.push_back("No");
+								flag=false;
+								break;
+							}
+							s.pop();
+						}
+						counter2--;
+						if(counter2<0)
+						{
+							vec.push_back("No");
+							flag=false;
+							break;
+						}
+					}
+				}
+			}
+	}
+	if(s.size()==0 && counter1==0 && counter2==0 && flag)
+		vec.push_back("Yes");
+	if((counter1!=0 || counter2!=0) && flag)
+		vec.push_back("No");
+label2:
+	counter1=0; counter2=0; flag=true;
+	while(s.size()!=0)
+		s.pop();
+}
+for(auto x:vec)
+	cout<<x<<"\n";
+return 0;
+}
